@@ -1,5 +1,21 @@
 import Head from 'next/head'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
-export default function Home() {
-  return <div></div>
+export default function Component() {
+  const { data: session }: any = useSession()
+  if (session) {
+    return (
+      <>
+        <img src={session.user?.image} />
+
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    )
+  }
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  )
 }
